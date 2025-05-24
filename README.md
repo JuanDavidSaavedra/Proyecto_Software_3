@@ -17,21 +17,21 @@ Nosotros como estudiantes desplegaremos una aplicación en configuraciones que v
 
 El objetivo principal es observar y cuantificar métricas de rendimiento clave, como el tiempo medio de respuesta y el throughput, bajo diferentes cargas, para luego analizar cómo el entorno de despliegue impacta en la aplicación y extraer conclusiones sobre su escalabilidad y eficiencia.
 
-## Pasos para ejecutar el Proyecto
+# Pasos para ejecutar el Proyecto
 
-# 1. Para la primera fase, nos ubicamos en la carpeta tickets_3J y, una vez dentro, ejecutamos el siguiente comando:
+## 1. Para la primera fase, nos ubicamos en la carpeta tickets_3J y, una vez dentro, ejecutamos el siguiente comando:
 
 docker-compose up
 
-# 2. la segunda fase, nos ubicamos en la carpeta fase2_kubernetes y luego a tickets_3J, una vez dentro, ejecutamos el siguiente comando:
+## 2. la segunda fase, nos ubicamos en la carpeta fase2_kubernetes y luego a tickets_3J, una vez dentro, ejecutamos el siguiente comando:
 
 microk8s kubectl apply -f k8s-fase2.yaml
 
-# 3. Para la tercera fase, nos ubicamos en la carpeta fase3_kubernetes y luego a tickets_3J, una vez dentro, ejecutamos el siguiente comando:
+## 3. Para la tercera fase, nos ubicamos en la carpeta fase3_kubernetes y luego a tickets_3J, una vez dentro, ejecutamos el siguiente comando:
 
 microk8s kubectl apply -f k8s-fase3.yaml
 
-# 4. Para mirar los puertos expuestos para visualizar la aplicación desplegada en el navegador, usa el siguiente comando:
+## 4. Para mirar los puertos expuestos para visualizar la aplicación desplegada en el navegador, usa el siguiente comando:
 
 Para fase 2:
 microk8s kubectl get svc -n tickets3j-namespace-fase2
@@ -39,7 +39,7 @@ microk8s kubectl get svc -n tickets3j-namespace-fase2
 Para fase 3:
 microk8s kubectl get svc -n tickets3j-namespace
 
-# 5. En la fase 1, para el bonus opcional, ejecuto lo siguiente estando dentro de la carpeta tickets_3J:
+## 5. En la fase 1, para el bonus opcional, ejecuto lo siguiente estando dentro de la carpeta tickets_3J:
 
 docker-compose down --> En caso de que esté levantado
 
