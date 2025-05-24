@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: tickets3J
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Avila16
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: >
+      bash -c "
+      echo 'Esperando conexión con PostgreSQL...' &&
+      until pg_isready -h db -p 5432 -U postgres; do
+        sleep 2
+      done &&
+      echo 'Base de datos disponible. Ejecutando migraciones...' &&
+      python manage.py migrate &&
+      python manage.py collectstatic --noinput &&
+      echo 'Iniciando servidor Gunicorn...' &&
+      gunicorn tickets_3J.wsgi:application --bind 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    expose:
+      - "8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_NAME: tickets3J
+      DB_USER: postgres
+      DB_PASSWORD: Avila16
+      DJANGO_SETTINGS_MODULE: tickets_3J.settings
+      DEBUG: "True"
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - static_volume:/usr/share/nginx/html/static:ro
+      - media_volume:/usr/share/nginx/html/media:ro
+    depends_on:
+      - web
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    restart: always
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:

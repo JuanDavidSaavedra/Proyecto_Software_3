@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-w3w%0%fvb5)iyd2zhw%z_0tf4b9o&^u7i!fbx1vv7(smhd5h*l
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -85,18 +85,17 @@ WSGI_APPLICATION = 'tickets_3J.wsgi.application'
   #  }
 #}
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'tickets3J',
-        'USER': 'postgres',
-        'PASSWORD': 'Avila16',
-        'PORT': '5432',
-        'HOST': 'localhost',
-
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME', 'tickets3J'),  # Nombre de tu BD
+        'USER': os.getenv('DB_USER', 'postgres'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'Avila16'),
+        'HOST': os.getenv('DB_HOST', 'db'),  # ← ¡Esto es clave! Usa 'db' (nombre del servicio en compose)
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -132,12 +131,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
-
-STATICFILES_DIRS =[
-    BASE_DIR / "static"
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
 ]
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
