@@ -1,4 +1,7 @@
 # Proyecto Final: Análisis de Desempeño con JMeter
+
+![1698533386883](https://github.com/user-attachments/assets/e4c1d884-cd16-4ff3-86c7-cfdc6e934b52)
+
 ## Curso: Principios y prácticas de desarrollo de software orientado a objetos
 ## Instructor: Gabriel Rodrigo Pedraza Ferreira
 
