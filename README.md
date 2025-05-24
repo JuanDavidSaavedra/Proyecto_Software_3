@@ -5,7 +5,9 @@
 ## 🎓 Curso
 
 **Principios & Prácticas de Desarrollo de Software Orientado a Objetos - C1**
+
 **Instructor:** Gabriel Rodrigo Pedraza Ferreira
+
 **Universidad Industrial de Santander**
 
 ## 👥 Integrantes
